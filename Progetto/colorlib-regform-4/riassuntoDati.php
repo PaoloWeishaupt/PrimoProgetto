@@ -10,7 +10,7 @@
     <meta name="keywords" content="Colorlib Templates">
 
     <!-- Title Page-->
-    <title>Registrazione</title>
+    <title>Riepilogo</title>
 
     <!-- Icons font CSS-->
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -36,7 +36,8 @@
     <link rel="stylesheet" href="intl-tel-input-14.0.0/examples/css/prism.css">
     <!-- My JavaScript-->
     <script src="js/inputCheck.js"></script>
-    <script>(function (global) {
+    <script>
+        (function (global) {
 
             if (typeof (global) === "undefined") {
                 throw new Error("window is undefined");
@@ -96,14 +97,14 @@
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
-                    <h2 class="titleData">Compila i seguenti campi</h2>
+                    <h2 class="titleData">Riepilogo dei dati</h2>
                     <h5>I campi seguiti da un * sono obbligatori</h5>
-                    <form method="POST" id="data" action="riassuntoDati.php" onsubmit="return checkAll();">
+                    <form method="POST" id="data" action="controlloDati.php">
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Nome*</label>
-                                    <input class="input--style-4" type="text" name="first_name" required id="name"
+                                    <input class="input--style-4" type="text" name="first_name" required readonly id="name"
                                         title="Il nome deve contenere solo lettere ed eventuali spazi" onkeyup="validateCharAndSpace('name')"
                                         maxlength="50" <?php echo isset($first_name) ? "value ='$first_name'" : "" ?>>
                                 </div>
@@ -111,7 +112,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Cognome*</label>
-                                    <input class="input--style-4" type="text" name="last_name" required id="cognome"
+                                    <input class="input--style-4" type="text" name="last_name" required readonly id="cognome"
                                         title="Il cognome deve contenere solo lettere ed eventuali spazi" onkeyup="validateCharAndSpace('cognome')"
                                         maxlength="50" <?php echo isset($last_name) ? "value ='$last_name'" : "" ?>>
                                 </div>
@@ -122,19 +123,18 @@
                                 <div class="input-group">
                                     <label class="label">Data di nascita*</label>
                                     <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="text" name="birthday" id="date"
-                                            required <?php echo isset($birthday) ? "value ='$birthday'" : "" ?>
-                                        autocomplete="off">
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                        <input class="input--style-4" type="text" name="birthday" id="date" readonly
+                                            <?php echo isset($birthday) ? "value ='$birthday'" : "" ?>>
+                                        <!--<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>-->
                                     </div>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Via*</label>
-                                    <input class="input--style-4" type="text" name="street" required id="street" title="La via deve contenere solo lettere ed eventuali spazi"
-                                        onkeyup="validateCharAndSpace('street')" maxlength="50" <?php echo
-                                        isset($street) ? "value ='$street'" : "" ?>>
+                                    <input class="input--style-4" type="text" name="street" required id="street"
+                                        readonly title="La via deve contenere solo lettere ed eventuali spazi" onkeyup="validateVia('street')"
+                                        maxlength="50" <?php echo isset($street) ? "value ='$street'" : "" ?>>
                                 </div>
                             </div>
                         </div>
@@ -142,17 +142,17 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Numero civico*</label>
-                                    <input class="input--style-4" type="text" name="civic" required id="civic" title="Il numero civico deve contenere da 1 a 3 cifre ed un eventuale carattere"
-                                        onkeyup="validateCivicNumber('civic')" <?php echo isset($civic) ?
-                                        "value ='$civic'" : "" ?>>
+                                    <input class="input--style-4" type="text" name="civic" required id="civic" readonly
+                                        onkeyup="validateCivicNumber('civic')" pattern="\d{1,3}[a-zA-Z]{0,1}" title="Il numero civico deve contenere da 1 a 3 cifre ed un eventuale carattere"
+                                        <?php echo isset($civic) ? "value ='$civic'" : "" ?>>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Città*</label>
-                                    <input class="input--style-4" type="text" name="city" required id="city" title="La città deve contenere solo lettere ed eventuali spazi"
-                                        onkeyup="validateCharAndSpace('city')" maxlength="50" <?php echo isset($city) ?
-                                        "value ='$city'" : "" ?>>
+                                    <input class="input--style-4" type="text" name="city" required id="city" readonly
+                                        title="La città deve contenere solo lettere ed eventuali spazi" onkeyup="validateCharAndSpace('city')"
+                                        maxlength="50" <?php echo isset($city) ? "value ='$city'" : "" ?>>
                                 </div>
                             </div>
                         </div>
@@ -161,72 +161,17 @@
                                 <div class="input-group">
                                     <label class="label">CAP*</label>
                                     <!-- Diario problemi -->
-                                    <input class="input--style-4" type="number" name="cap" required id="cap" onkeyup="validateCAP('cap');javascript: return event.keyCode == 69 ? false : true"
-                                        title="Inserisci un CAP tra 4 e 5 cifre" <?php echo isset($cap) ?
-                                        "value ='$cap'" : "" ?>>
+                                    <input class="input--style-4" type="number" name="cap" required id="cap" readonly
+                                        onkeydown="javascript: return event.keyCode == 69 ? false : true" pattern="^\d{1,5}$"
+                                        title="Inserisci un CAP tra 1 e 5 cifre" onkeyup="validateCAP('cap')" <?php
+                                        echo isset($cap) ? "value ='$cap'" : "" ?>>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Numero di telefono*</label>
-                                    <input class="input--style-4" type="tel" name="phone" id="phone" required <?php
-                                        echo isset($phone) ? "value ='$phone'" : "" ?>>
-                                    <span id="valid-msg" class="hide">✓ Valid</span>
-                                    <span id="error-msg" class="hide"></span>
-                                    <!--Script for the personalized number input-->
-                                    <script src="intl-tel-input-14.0.0/build/js/intlTelInput.js"></script>
-                                    <script>
-                                        var input = document.querySelector("#phone"),
-                                            errorMsg = document.querySelector("#error-msg"),
-                                            validMsg = document.querySelector("#valid-msg");
-
-                                        // here, the index maps to the error code returned from getValidationError - see readme
-                                        var errorMap = ["Numero non valido", "Prefisso non valido", "Troppo corto", "Troppo lungo", "Invalid number"];
-
-                                        // initialise plugin
-                                        var iti = window.intlTelInput(input, {
-                                            initialCountry: "auto",
-                                            autoPlaceholder: "aggressive",
-                                            geoIpLookup: function (success, failure) {
-                                                $.get("https://ipinfo.io", function () { }, "jsonp").always(function (resp) {
-                                                    var countryCode = (resp && resp.country) ? resp.country : "";
-                                                    success(countryCode);
-                                                });
-                                            },
-                                            utilsScript: "intl-tel-input-14.0.0/build/js/utils.js",
-                                        });
-                                        var reset = function () {
-                                            // set input value
-                                            input.value = iti.getNumber();
-                                            input.classList.remove("error");
-                                            errorMsg.innerHTML = "";
-                                            errorMsg.classList.add("hide");
-                                            validMsg.classList.add("hide");
-                                        };
-
-                                        // on blur: validate
-                                        input.addEventListener('blur', function () {
-                                            reset();
-                                            if (input.value.trim()) {
-                                                if (iti.isValidNumber()) {
-                                                    validMsg.classList.remove("hide");
-                                                    validateNumber(true);
-                                                } else {
-                                                    input.classList.add("error");
-                                                    var errorCode = iti.getValidationError();
-                                                    errorMsg.innerHTML = errorMap[errorCode];
-                                                    errorMsg.classList.remove("hide");
-                                                    validateNumber(false);
-                                                }
-                                            }
-                                        });
-
-                                        // on keyup / change flag: reset
-                                        input.addEventListener('change', reset);
-                                        input.addEventListener('keyup', reset);
-
-                                    </script>
-                                    <script class="iti-load-utils" async="" src="intl-tel-input-14.0.0/build/js/utils.js"></script>
+                                    <input class="input--style-4" type="tel" name="phone" id="phone" required readonly
+                                        <?php echo isset($phone) ? "value ='$phone'" : "" ?>>
                                 </div>
                             </div>
                         </div>
@@ -234,23 +179,15 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Email*</label>
-                                    <input class="input--style-4" type="email" id="mail" name="email" maxlength="50" required
-                                        <?php echo isset($email) ? "value ='$email'" : "" ?> onkeyup="validateMail('mail')">
+                                    <input class="input--style-4" type="email" name="email" maxlength="50" required
+                                        readonly <?php echo isset($email) ? "value ='$email'" : "" ?>>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Sesso*</label>
-                                    <div class="p-t-10">
-                                        <label class="radio-container m-r-45">M
-                                            <input type="radio" name="gender" value="Maschio" id="mal" required checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-container">F
-                                            <input type="radio" name="gender" value="Femmina" id="fem">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
+                                    <input class="input--style-4" type="text" name="gender" required id="genderCheck"
+                                        readonly maxlength="50" <?php echo isset($gender) ? "value ='$gender'" : "" ?>>
                                 </div>
                             </div>
                         </div>
@@ -258,36 +195,30 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Hobby</label>
-                                    <input class="input--style-4" type="text" id="hobby" name="hobby" maxlength="500"
-                                        pattern="[a-zA-Z\s,]*$" title="L'hobby' deve contenere solo lettere ed eventuali spazi"
-                                        onkeyup="validateNotReq('hobby')" <?php echo isset($hobby) ? "value ='$hobby'"
-                                        : "" ?>>
+                                    <input class="input--style-4" type="text" name="hobby" maxlength="500" readonly
+                                        pattern="[a-zA-Z\s]*$" title="L'hobby' deve contenere solo lettere ed eventuali spazi"
+                                        <?php echo isset($hobby) ? "value ='$hobby'" : "" ?>>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Professione</label>
-                                    <input class="input--style-4" type="text" id="job" name="job" maxlength="500"
-                                        pattern="[a-zA-Z\s,]*$" title="La professione deve contenere solo lettere ed eventuali spazi"
-                                        onkeyup="validateNotReq('job')" <?php echo isset($job) ? "value ='$job'" : "" ?>>
+                                    <input class="input--style-4" type="text" name="job" maxlength="500" readonly
+                                        pattern="[a-zA-Z\s]*$" title="La professione deve contenere solo lettere ed eventuali spazi"
+                                        <?php echo isset($job) ? "value ='$job'" : "" ?>>
                                 </div>
                             </div>
                         </div>
                         <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="button" onclick="deleteData()">Cancella</button>
-                            <button class="btnAvanti btn--radius-2 btn--blue" type="submit" onclick="validateGender('gender')">Avanti</button>
+                            <button class="btn btn--radius-2 btn--blue" type="submit" formaction="inserimentoDati.php">Correggi</button>
+                            <button class="btnAvanti btn--radius-2 btn--blue" type="submit" onclick="">Avanti</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        $(".js-datepicker").on('keydown paste', function (e) {
-            e.preventDefault();
-        });
-    </script>
+
     <!-- Jquery JS-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->
