@@ -98,7 +98,6 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="titleData">Riepilogo dei dati</h2>
-                    <h5>I campi seguiti da un * sono obbligatori</h5>
                     <form method="POST" id="data" action="controlloDati.php">
                         <div class="row row-space">
                             <div class="col-2">

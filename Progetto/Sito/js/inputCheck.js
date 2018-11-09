@@ -1,9 +1,12 @@
 "use strict";
 
-function deleteData(){
-    var inputs = document.querySelectorAll("input"), errorMsg = document.querySelector("#error-msg"), validMsg = document.querySelector("#valid-msg");
+function deleteData() {
+    var inputs = document.querySelectorAll("input"),
+        errorMsg = document.querySelector("#error-msg"),
+        validMsg = document.querySelector("#valid-msg");
+
     console.log(inputs);
-    
+
     inputs.forEach(element => {
         element.value = "";
         element.style.border = "none";
@@ -15,7 +18,10 @@ function deleteData(){
 
 function validateGender() {
     var gender = document.getElementsByName('gender')[0].checked;
-    document.getElementsByName('gender')[0].value = (gender === true ? "Maschio" : document.getElementsByName('gender')[1].value = "Femmina");
+    document.getElementsByName('gender')[0].value =
+        (gender === true ?
+            "Maschio" :
+            document.getElementsByName('gender')[1].value = "Femmina");
     validateDate('date');
 }
 
@@ -48,13 +54,13 @@ function validateMail(id) {
         return false;
     }
 }
-	
+
 
 function validateNotReq(id) {
     var obj = document.getElementById(id);
     var str = obj.value;
     var patt = /^[a-zA-Zàáâäãåaccèéìínòóùú ,.'-]+$/;
-    if ((patt.test(str) === true) || (str ==="")) {
+    if ((patt.test(str) === true) || (str === "")) {
         obj.style.border = "1px solid lime";
         console.log("carattere");
         return true;
@@ -151,7 +157,6 @@ function validateNumber(valid) {
 }
 
 function checkAll() {
-    console.log("checkallasdllsadl");
 
     if (validateCharAndSpace('name') &&
         validateCharAndSpace('cognome') &&
@@ -172,7 +177,7 @@ function checkAll() {
         validateVia('street');
         validateCAP('cap');
         validateMail('mail') &&
-        validateCivicNumber('civic');
+            validateCivicNumber('civic');
         validateCharAndSpace('city');
         validateNumber('phone');
         validateNotReq('hobby');

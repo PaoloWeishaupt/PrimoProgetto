@@ -59,6 +59,10 @@
             }
 
         })(window);
+
+        function redirect(){
+            window.location='index.html';
+        }
     </script>
 </head>
 
@@ -117,7 +121,7 @@ function validateCivicNumber($input)
 
 function validateCAP($input)
 {
-    $pattern = "/^\d{1,5}$/";
+    $pattern = "/^\d{4,5}$/";
     return preg_match($pattern, $input) ? true : false;
 }
 
@@ -262,6 +266,7 @@ function checkAll($first_name, $last_name, $birthday, $street, $civic, $city, $e
                 echo "</table></div></div></div></div>";
                 fclose($fileToday);
             }
+            echo "<button class='btn btn--radius-2 btn--blue' onclick='redirect()'>Fine</button>";
         } else {
             $file = fopen("Registrazioni/Registrazioni_tutte.csv", "a+");
             foreach ($list as $line) {
@@ -374,6 +379,7 @@ function checkAll($first_name, $last_name, $birthday, $street, $civic, $city, $e
                 echo "</table></div></div></div></div>";
                 fclose($fileToday);
             }
+            echo "<button class='btn btn--radius-2 btn--blue' onclick='redirect()'>Fine</button>";
         }
     }
 }
